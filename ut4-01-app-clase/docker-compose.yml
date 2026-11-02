@@ -1,0 +1,35 @@
+name: dwes-ut4-01
+
+services:
+  db:
+    image: mysql:8.4
+    container_name: dwes-ut4-01-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: dwes_T4
+      MYSQL_USER: JAMM
+      MYSQL_PASSWORD: ${MYSQL_APP_PASSWORD}
+    ports:
+      - "127.0.0.1:19401:3306"
+    volumes:
+      - mysql_datos:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d:ro
+
+  web:
+    build: .
+    container_name: dwes-ut4-01-web
+    ports:
+      - "9401:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: dwes_T4
+      DB_USER: JAMM
+      DB_PASSWORD: ${MYSQL_APP_PASSWORD}
+    depends_on:
+      - db
+
+volumes:
+  mysql_datos:

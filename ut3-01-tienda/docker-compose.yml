@@ -1,0 +1,35 @@
+name: dwes-ut3-01
+
+services:
+
+  # Base de datos MySQL
+  db:
+    image: mysql:8.4
+    container_name: dwes-ut3-01-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+
+  # Servidor web: PHP + Apache
+  web:
+    build: .
+    container_name: dwes-ut3-01-web
+    ports:
+      - "9301:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - db
+
+volumes:
+  db-data:  

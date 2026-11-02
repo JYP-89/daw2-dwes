@@ -1,0 +1,12 @@
+name: dwes-ut2-01
+
+services:
+
+  # Servidor web: PHP + Apache
+  web:
+    image: php:8.2-apache
+    container_name: dwes-ut2-01-web
+    ports:
+      - "9201:80"
+    volumes:
+      - ./src:/var/www/html

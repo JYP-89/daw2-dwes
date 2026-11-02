@@ -1,0 +1,18 @@
+# --- Secretos ---
+.env
+.htpasswd
+*.key
+*.crt
+
+# --- WordPress: lo genera la imagen al arrancar ---
+code/
+
+# --- Capturas para la documentación ---
+Capturas*/
+
+# --- Temporales y sistema operativo ---
+*.log
+*.tmp
+Thumbs.db
+desktop.ini
+.DS_Store
